@@ -34,7 +34,8 @@ RUN mkdir ~/opencv && cd ~/opencv \
             -D INSTALL_PYTHON_EXAMPLES=ON \    
             -D OPENCV_GENERATE_PKGCONFIG=ON \
             -D OPENCV_EXTRA_MODULES_PATH=~/opencv/opencv_contrib/modules \
-            -D BUILD_EXAMPLES=ON .. \
+            -D BUILD_EXAMPLES=ON \
+            -D OPENCV_ENABLE_NONFREE=ON .. \
     && make -j8 \
     && make install \
     # Clean up

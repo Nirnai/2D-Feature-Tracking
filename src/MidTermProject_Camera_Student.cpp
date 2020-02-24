@@ -38,6 +38,8 @@ int main(int argc, const char *argv[])
     // misc
     int dataBufferSize = 2;       // no. of images which are held in memory (ring buffer) at the same time
     vector<DataFrame> dataBuffer; // list of data frames which are held in memory at the same time
+    dataBuffer.reserve(dataBufferSize); // optimizes vector usage
+
     bool bVis = false;            // visualize results
 
     /* MAIN LOOP OVER ALL IMAGES */
@@ -62,6 +64,9 @@ int main(int argc, const char *argv[])
         // push image into data frame buffer
         DataFrame frame;
         frame.cameraImg = imgGray;
+        // RingBuffer Implementation
+        if(dataBuffer.size() >= dataBufferSize)
+            dataBuffer.erase(dataBuffer.begin());
         dataBuffer.push_back(frame);
 
         //// EOF STUDENT ASSIGNMENT
@@ -71,7 +76,7 @@ int main(int argc, const char *argv[])
 
         // extract 2D keypoints from current image
         vector<cv::KeyPoint> keypoints; // create empty feature list for current image
-        string detectorType = "SHITOMASI";
+        string detectorType = "SIFT";
 
         //// STUDENT ASSIGNMENT
         //// TASK MP.2 -> add the following keypoint detectors in file matching2D.cpp and enable string-based selection based on detectorType
@@ -81,9 +86,13 @@ int main(int argc, const char *argv[])
         {
             detKeypointsShiTomasi(keypoints, imgGray, false);
         }
+        else if(detectorType.compare("HARRIS") == 0)
+        {
+            detKeypointsHarris(keypoints, imgGray, false);
+        }
         else
         {
-            //...
+            detKeypointsModern(keypoints, imgGray, detectorType);
         }
         //// EOF STUDENT ASSIGNMENT
 
@@ -95,7 +104,9 @@ int main(int argc, const char *argv[])
         cv::Rect vehicleRect(535, 180, 180, 150);
         if (bFocusOnVehicle)
         {
-            // ...
+            cv::Mat mask = cv::Mat::zeros(imgGray.rows, imgGray.cols, CV_8U);
+            mask(vehicleRect) = 1;
+            cv::KeyPointsFilter::runByPixelsMask(keypoints, mask);
         }
 
         //// EOF STUDENT ASSIGNMENT
