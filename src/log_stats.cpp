@@ -126,6 +126,6 @@ int main()
     //     for (auto descriptor: descriptors)
     //         run(detector, descriptor);
     // }
-    run("FAST", "BRISK");
+    run("AKAZE", "AKAZE");
     
 }

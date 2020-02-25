@@ -122,45 +122,76 @@ Average Number of Matches : 80
 ----------------------------------------------
 
 
+
+
+
+
 Timing of Descriptors
 
-BRIEF:   2.44977 ms
-BRIEF:   2.178   ms
-BRIEF:   2.43762 ms
-BRIEF:   1.31533 ms
-BRIEF:   1.19698 ms
-BRIEF:   1.40122 ms
-BRIEF:   1.27747 ms
-BRIEF:   1.60467 ms
-BRIEF:   2.11198 ms
-BRIEF:   1.1967  ms
-SIFT :  25.216   ms
-SIFT :  23.6713  ms
-SIFT :  25.0829  ms
-SIFT :  24.0655  ms
-SIFT :  22.7001  ms
-SIFT :  23.1628  ms
-SIFT :  22.2255  ms
-SIFT :  19.9838  ms
-SIFT :  24.9698  ms
-SIFT :  22.7317  ms
-ORB  :   5.93549 ms
-ORB  :   4.01555 ms
-ORB  :   4.09816 ms
-ORB  :   3.98048 ms
-ORB  :   3.69341 ms
-ORB  :   4.39954 ms
-ORB  :   3.76213 ms
-ORB  :   4.25303 ms
-ORB  :   3.53384 ms
-ORB  :   3.67628 ms
-FREAK:  40.6063  ms
-FREAK:  39.1276  ms
-FREAK:  34.5252  ms
-FREAK:  34.3852  ms
-FREAK:  33.7323  ms
-FREAK:  34.26    ms
-FREAK:  34.0883  ms
-FREAK:  34.107   ms
-FREAK:  35.2596  ms
-FREAK:  34.3557  ms
+Descriptor, Time
+
+BRIEF,   2.44977 ms
+BRIEF,   2.178   ms
+BRIEF,   2.43762 ms
+BRIEF,   1.31533 ms
+BRIEF,   1.19698 ms
+BRIEF,   1.40122 ms
+BRIEF,   1.27747 ms
+BRIEF,   1.60467 ms
+BRIEF,   2.11198 ms
+BRIEF,   1.1967  ms
+
+BRISK,   6.3033  ms
+BRISK,   6.0711  ms
+BRISK,   5.9352  ms
+BRISK,   7.0899  ms
+BRISK,   4.93577 ms
+BRISK,   5.95135 ms
+BRISK,   5.17652 ms
+BRISK,   5.31517 ms
+BRISK,   5.74    ms
+BRISK,   5.12771 ms
+
+SIFT ,  25.216   ms
+SIFT ,  23.6713  ms
+SIFT ,  25.0829  ms
+SIFT ,  24.0655  ms
+SIFT ,  22.7001  ms
+SIFT ,  23.1628  ms
+SIFT ,  22.2255  ms
+SIFT ,  19.9838  ms
+SIFT ,  24.9698  ms
+SIFT ,  22.7317  ms
+
+ORB  ,   5.93549 ms
+ORB  ,   4.01555 ms
+ORB  ,   4.09816 ms
+ORB  ,   3.98048 ms
+ORB  ,   3.69341 ms
+ORB  ,   4.39954 ms
+ORB  ,   3.76213 ms
+ORB  ,   4.25303 ms
+ORB  ,   3.53384 ms
+ORB  ,   3.67628 ms
+
+FREAK,  40.6063  ms
+FREAK,  39.1276  ms
+FREAK,  34.5252  ms
+FREAK,  34.3852  ms
+FREAK,  33.7323  ms
+FREAK,  34.26    ms
+FREAK,  34.0883  ms
+FREAK,  34.107   ms
+FREAK,  35.2596  ms
+FREAK,  34.3557  ms
+
+AKAZE,  65.1365  ms
+AKAZE,  67.5608  ms
+AKAZE,  75.7598  ms
+AKAZE,  75.8423  ms
+AKAZE,  69.6973  ms
+AKAZE,  73.9772  ms
+AKAZE,  77.4301  ms
+AKAZE,  73.6103  ms
+AKAZE,  67.9119  ms
+AKAZE,  67.4314  ms
