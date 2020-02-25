@@ -46,13 +46,13 @@ Number of points in a bounding box, the neighbourhood and the time for finding t
 
 ###  MP.8 Performance Evaluation 2
 
-The Number of Matches can be found for the different combinations in: `results/descriptors.csv`
+The Number of Matches can be found for the different combinations in: `results/matches.csv`. This matches were avarages over the 10 frames. The x-axis shows the detector, and the y-axis the discriptor.
 
 1. FAST - BRIEF
 2. FAST - SIFT
 3. FAST - ORB
 
-It should be noted that AKAZE Descriptor only works with AKAZE Detector
+It should be noted that AKAZE Descriptor only works with AKAZE Detector and the SIFT detector does not work with ORB Descriptors.   
 
 ###  MP.9 Performance Evaluation 3
 
@@ -63,3 +63,5 @@ The processing time of detectors can be found in the detector file and the timin
 1. FAST - BRIEF (Perform the best and are the fastest)
 2. FAST - ORF (High performance and second fastest)
 3. FAST - SIFT (High Perfromance but SIFT descriptor is slow)
+
+
