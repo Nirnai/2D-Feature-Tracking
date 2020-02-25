@@ -78,9 +78,9 @@ void run(std::string detector, std::string descriptor)
                 n += kp.size;
             }
 
-            std::cout<<"Number Keypoints: " << keypoints.size() << std::endl;
-            std::cout<<"Neigh: " << n/keypoints.size() << std::endl;
-            std::cout<<"--------------------------------------" << std::endl;
+            // std::cout<<"Number Keypoints: " << keypoints.size() << std::endl;
+            // std::cout<<"Neigh: " << n/keypoints.size() << std::endl;
+            // std::cout<<"--------------------------------------" << std::endl;
         }
         (dataBuffer.end() - 1)->keypoints = keypoints;
 
@@ -111,8 +111,8 @@ void run(std::string detector, std::string descriptor)
             num_matches += matches.size();
         }
     }
-    // std::cout << "Average Number of Matches : " << num_matches/10 << std::endl;
-    // std::cout << "----------------------------------------------" << std::endl;
+    std::cout << "Average Number of Matches : " << num_matches/10 << std::endl;
+    std::cout << "----------------------------------------------" << std::endl;
 }
 
 
@@ -122,10 +122,10 @@ int main()
     std::vector<std::string> descriptors { "FREAK", "BRIEF", "BRISK", "ORB", "SIFT" };
     // for (auto detector : detectors)
     // {
-    //     run(detector, "FREAK");
-    //     // for (auto descriptor: descriptors)
-    //     //     run(detector, descriptor);
+    //     // run(detector, "FREAK");
+    //     for (auto descriptor: descriptors)
+    //         run(detector, descriptor);
     // }
-    run("SIFT", "FREAK");
+    run("FAST", "BRISK");
     
 }

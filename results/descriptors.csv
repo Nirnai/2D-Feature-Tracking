@@ -1,0 +1,166 @@
+Matching Performance of Detector-Descriptor combination
+
+Detector: HARRIS
+Descriptor: FREAK
+Average Number of Matches : 12.9
+----------------------------------------------
+Detector: HARRIS
+Descriptor: BRIEF
+Average Number of Matches : 16.9
+----------------------------------------------
+Detector: HARRIS
+Descriptor: BRISK
+Average Number of Matches : 12.2
+----------------------------------------------
+Detector: HARRIS
+Descriptor: ORB
+Average Number of Matches : 16.4
+----------------------------------------------
+Detector: HARRIS
+Descriptor: SIFT
+Average Number of Matches : 16.5
+----------------------------------------------
+Detector: SHITOMASI
+Descriptor: FREAK
+Average Number of Matches : 76.8
+----------------------------------------------
+Detector: SHITOMASI
+Descriptor: BRIEF
+Average Number of Matches : 94.4
+----------------------------------------------
+Detector: SHITOMASI
+Descriptor: BRISK
+Average Number of Matches : 76.7
+----------------------------------------------
+Detector: SHITOMASI
+Descriptor: ORB
+Average Number of Matches : 90.7
+----------------------------------------------
+Detector: SHITOMASI
+Descriptor: SIFT
+Average Number of Matches : 92.7
+----------------------------------------------
+Detector: FAST
+Descriptor: FREAK
+Average Number of Matches : 223.3
+----------------------------------------------
+Detector: FAST
+Descriptor: BRIEF
+Average Number of Matches : 283.1
+----------------------------------------------
+Detector: FAST
+Descriptor: BRISK
+Average Number of Matches : 218.3
+----------------------------------------------
+Detector: FAST
+Descriptor: ORB
+Average Number of Matches : 276.2
+----------------------------------------------
+Detector: FAST
+Descriptor: SIFT
+Average Number of Matches : 278.2
+----------------------------------------------
+Detector: BRISK
+Descriptor: FREAK
+Average Number of Matches : 152.4
+----------------------------------------------
+Detector: BRISK
+Descriptor: BRIEF
+Average Number of Matches : 170.3
+----------------------------------------------
+Detector: BRISK
+Descriptor: BRISK
+Average Number of Matches : 157
+----------------------------------------------
+Detector: BRISK
+Descriptor: ORB
+Average Number of Matches : 151
+----------------------------------------------
+Detector: BRISK
+Descriptor: SIFT
+Average Number of Matches : 164.6
+----------------------------------------------
+Detector: ORB
+Descriptor: FREAK
+Average Number of Matches : 42
+----------------------------------------------
+Detector: ORB
+Descriptor: BRIEF
+Average Number of Matches : 54.5
+----------------------------------------------
+Detector: ORB
+Descriptor: BRISK
+Average Number of Matches : 75.1
+----------------------------------------------
+Detector: ORB
+Descriptor: ORB
+Average Number of Matches : 76.1
+----------------------------------------------
+Detector: ORB
+Descriptor: SIFT
+Average Number of Matches : 76.3
+----------------------------------------------
+Detector: SIFT
+Descriptor: FREAK
+Average Number of Matches : 59.3
+----------------------------------------------
+Detector: SIFT
+Descriptor: BRIEF
+Average Number of Matches : 70.2
+----------------------------------------------
+Detector: SIFT
+Descriptor: BRISK
+Average Number of Matches : 59.2
+----------------------------------------------
+Detector: AKAZE
+Descriptor: AKAZE
+Average Number of Matches : 125.9
+----------------------------------------------
+Detector: SIFT
+Descriptor: SIFT
+Average Number of Matches : 80
+----------------------------------------------
+
+
+Timing of Descriptors
+
+BRIEF:   2.44977 ms
+BRIEF:   2.178   ms
+BRIEF:   2.43762 ms
+BRIEF:   1.31533 ms
+BRIEF:   1.19698 ms
+BRIEF:   1.40122 ms
+BRIEF:   1.27747 ms
+BRIEF:   1.60467 ms
+BRIEF:   2.11198 ms
+BRIEF:   1.1967  ms
+SIFT :  25.216   ms
+SIFT :  23.6713  ms
+SIFT :  25.0829  ms
+SIFT :  24.0655  ms
+SIFT :  22.7001  ms
+SIFT :  23.1628  ms
+SIFT :  22.2255  ms
+SIFT :  19.9838  ms
+SIFT :  24.9698  ms
+SIFT :  22.7317  ms
+ORB  :   5.93549 ms
+ORB  :   4.01555 ms
+ORB  :   4.09816 ms
+ORB  :   3.98048 ms
+ORB  :   3.69341 ms
+ORB  :   4.39954 ms
+ORB  :   3.76213 ms
+ORB  :   4.25303 ms
+ORB  :   3.53384 ms
+ORB  :   3.67628 ms
+FREAK:  40.6063  ms
+FREAK:  39.1276  ms
+FREAK:  34.5252  ms
+FREAK:  34.3852  ms
+FREAK:  33.7323  ms
+FREAK:  34.26    ms
+FREAK:  34.0883  ms
+FREAK:  34.107   ms
+FREAK:  35.2596  ms
+FREAK:  34.3557  ms
