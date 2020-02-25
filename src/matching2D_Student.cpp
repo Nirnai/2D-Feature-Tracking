@@ -42,7 +42,7 @@ void matchDescriptors(std::vector<cv::KeyPoint> &kPtsSource, std::vector<cv::Key
         {
             if(knn_match[0].distance < 0.8 * knn_match[1].distance)
                 matches.push_back(knn_match[0]);
-        }
+        }   
     }
 }
 

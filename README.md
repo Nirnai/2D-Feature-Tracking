@@ -34,7 +34,135 @@ See the classroom instruction and code comments for more details on each of thes
 4. Run it: `./2D_feature_tracking`.
 
 
-## Tasks
+## Writeup
+
+### MP.1
+By erasing the first element of a vector the other elements are automatically shifted left. This implementation allows to keep the vector as a container.
+```c++
+dataBuffer.reserve(dataBufferSize);
+...
+// RingBuffer Implementation
+if(dataBuffer.size() >= dataBufferSize)
+    dataBuffer.erase(dataBuffer.begin());
+dataBuffer.push_back(frame);
+```
+
+### MP.2 
+Keypoint Detection
+``` c++
+  cv::Ptr<cv::FeatureDetector> detector;
+  if(detectorType.compare("FAST") == 0)
+  {
+      detector = cv::FastFeatureDetector::create();
+  }
+  else if(detectorType.compare("BRISK") == 0)
+  {
+      detector = cv::BRISK::create();
+  }
+  else if(detectorType.compare("ORB") == 0)
+  {
+      detector = cv::ORB::create();
+  }
+  else if(detectorType.compare("AKAZE") == 0)
+  {
+      detector = cv::AKAZE::create();
+  }
+  else if(detectorType.compare("SIFT") == 0)
+  {
+      detector = cv::xfeatures2d::SIFT::create();
+  }
+```
+### MP.3 Keypoint Removal
+Filtering all keypoints with a mask
+```c++
+// only keep keypoints on the preceding vehicle
+bool bFocusOnVehicle = true;
+cv::Rect vehicleRect(535, 180, 180, 150);
+if (bFocusOnVehicle)
+{
+  cv::Mat mask = cv::Mat::zeros(imgGray.rows, imgGray.cols, CV_8U);
+  mask(vehicleRect) = 1;
+  cv::KeyPointsFilter::runByPixelsMask(keypoints, mask);
+}
+```
+
+
+### MP.4 Descriptor
+```c++
+// select appropriate descriptor
+cv::Ptr<cv::DescriptorExtractor> extractor;
+if (descriptorType.compare("BRISK") == 0)
+{
+
+    int threshold = 30;        // FAST/AGAST detection threshold score.
+    int octaves = 3;           // detection octaves (use 0 to do single scale)
+    float patternScale = 1.0f; // apply this scale to the pattern used for sampling the neighbourhood of a keypoint.
+
+    extractor = cv::BRISK::create(threshold, octaves, patternScale);
+}
+else if (descriptorType.compare("BRIEF") == 0)
+{
+    extractor = cv::xfeatures2d::BriefDescriptorExtractor::create();
+}
+else if (descriptorType.compare("ORB") == 0)
+{
+    extractor = cv::ORB::create();
+}
+else if (descriptorType.compare("FREAK") == 0)
+{
+    extractor = cv::xfeatures2d::FREAK::create();
+}
+else if (descriptorType.compare("AKAZE") == 0)
+{
+    extractor = cv::AKAZE::create();
+}
+else if (descriptorType.compare("SIFT") == 0)
+{
+    extractor = cv::xfeatures2d::SIFT::create();
+}
+// perform feature description
+extractor->compute(img, keypoints, descriptors);
+```
+
+
+### MP.5 Matching
+```c++
+// configure matcher
+bool crossCheck = false;
+cv::Ptr<cv::DescriptorMatcher> matcher;
+
+if (matcherType.compare("MAT_BF") == 0)
+{
+    int normType;
+    if(descriptorType.compare("DES_BINARY") == 0)
+        normType = cv::NORM_HAMMING;
+    else
+        normType = cv::NORM_L2;
+    matcher = cv::BFMatcher::create(normType, crossCheck);
+}
+else if (matcherType.compare("MAT_FLANN") == 0)
+{
+    if(descSource.type() != CV_32F)
+        descSource.convertTo(descSource, CV_32F);
+    if(descRef.type() != CV_32F)
+        descRef.convertTo(descRef, CV_32F);
+    matcher = cv::FlannBasedMatcher::create();
+}
+```
+
+### MP.6 Descriptor Distance Ratio
+
+```c++
+// k nearest neighbors (k=2)
+std::vector<std::vector<cv::DMatch>> knn_matches;
+matcher->knnMatch(descSource, descRef, knn_matches, 2);
+for(auto& knn_match : knn_matches)
+{
+    if(knn_match[0].distance < 0.8 * knn_match[1].distance)
+        matches.push_back(knn_match[0]);
+}  
+```
+
 ###  MP.7 Performance Evaluation 1
 
 Number of points in a bounding box, the neighbourhood and the time for finding the keypoints can be seen in: `results/detectors.csv`

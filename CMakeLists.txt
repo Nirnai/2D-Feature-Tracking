@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.4)
 project(CameraFusion LANGUAGES CXX)
 
-find_package(OpenCV 4.2 REQUIRED)
+find_package(OpenCV 4.1 REQUIRED)
 
 add_executable(2D_feature_tracking src/matching2D_Student.cpp src/MidTermProject_Camera_Student.cpp)
 target_include_directories(2D_feature_tracking PUBLIC ${OpenCV_INCLUDE_DIRS})
