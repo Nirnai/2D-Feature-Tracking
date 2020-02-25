@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/build/harris_detector",
+            "program": "${workspaceFolder}/build/log_stats",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/build",

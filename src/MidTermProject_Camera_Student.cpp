@@ -76,7 +76,7 @@ int main(int argc, const char *argv[])
 
         // extract 2D keypoints from current image
         vector<cv::KeyPoint> keypoints; // create empty feature list for current image
-        string detectorType = "SIFT";
+        string detectorType = "HARRIS";
 
         //// STUDENT ASSIGNMENT
         //// TASK MP.2 -> add the following keypoint detectors in file matching2D.cpp and enable string-based selection based on detectorType
@@ -107,6 +107,21 @@ int main(int argc, const char *argv[])
             cv::Mat mask = cv::Mat::zeros(imgGray.rows, imgGray.cols, CV_8U);
             mask(vehicleRect) = 1;
             cv::KeyPointsFilter::runByPixelsMask(keypoints, mask);
+            float mu=0;
+            float sigma=0;
+            for(auto& p : keypoints)
+            {
+                mu += p.size;
+            }
+            mu = mu/keypoints.size();
+            for(auto& p : keypoints)
+            {
+                sigma += std::pow((p.size - mu),2);
+            }
+            sigma = sigma/keypoints.size();
+            std::cout << "Keypoints on Vehicle : " << keypoints.size() << std::endl;
+            std::cout << "Average Neighborhood : " << mu << std::endl;
+            std::cout << "Variance Neighborhood : " << sigma << std::endl;
         }
 
         //// EOF STUDENT ASSIGNMENT
@@ -151,9 +166,9 @@ int main(int argc, const char *argv[])
             /* MATCH KEYPOINT DESCRIPTORS */
 
             vector<cv::DMatch> matches;
-            string matcherType = "MAT_BF";        // MAT_BF, MAT_FLANN
+            string matcherType = "MAT_FLANN";        // MAT_BF, MAT_FLANN
             string descriptorType = "DES_BINARY"; // DES_BINARY, DES_HOG
-            string selectorType = "SEL_NN";       // SEL_NN, SEL_KNN
+            string selectorType = "SEL_KNN";       // SEL_NN, SEL_KNN
 
             //// STUDENT ASSIGNMENT
             //// TASK MP.5 -> add FLANN matching in file matching2D.cpp

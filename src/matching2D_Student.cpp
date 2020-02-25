@@ -13,24 +13,36 @@ void matchDescriptors(std::vector<cv::KeyPoint> &kPtsSource, std::vector<cv::Key
 
     if (matcherType.compare("MAT_BF") == 0)
     {
-        int normType = cv::NORM_HAMMING;
+        int normType;
+        if(descriptorType.compare("DES_BINARY") == 0)
+            normType = cv::NORM_HAMMING;
+        else
+            normType = cv::NORM_L2;
         matcher = cv::BFMatcher::create(normType, crossCheck);
     }
     else if (matcherType.compare("MAT_FLANN") == 0)
     {
-        // ...
+        if(descSource.type() != CV_32F)
+            descSource.convertTo(descSource, CV_32F);
+        if(descRef.type() != CV_32F)
+            descRef.convertTo(descRef, CV_32F);
+        matcher = cv::FlannBasedMatcher::create();
     }
 
     // perform matching task
     if (selectorType.compare("SEL_NN") == 0)
     { // nearest neighbor (best match)
-
         matcher->match(descSource, descRef, matches); // Finds the best match for each descriptor in desc1
     }
     else if (selectorType.compare("SEL_KNN") == 0)
     { // k nearest neighbors (k=2)
-
-        // ...
+        std::vector<std::vector<cv::DMatch>> knn_matches;
+        matcher->knnMatch(descSource, descRef, knn_matches, 2);
+        for(auto& knn_match : knn_matches)
+        {
+            if(knn_match[0].distance < 0.8 * knn_match[1].distance)
+                matches.push_back(knn_match[0]);
+        }
     }
 }
 
@@ -48,17 +60,32 @@ void descKeypoints(vector<cv::KeyPoint> &keypoints, cv::Mat &img, cv::Mat &descr
 
         extractor = cv::BRISK::create(threshold, octaves, patternScale);
     }
-    else
+    else if (descriptorType.compare("BRIEF") == 0)
     {
-
-        //...
+        extractor = cv::xfeatures2d::BriefDescriptorExtractor::create();
+    }
+    else if (descriptorType.compare("ORB") == 0)
+    {
+        extractor = cv::ORB::create();
+    }
+    else if (descriptorType.compare("FREAK") == 0)
+    {
+        extractor = cv::xfeatures2d::FREAK::create();
+    }
+    else if (descriptorType.compare("AKAZE") == 0)
+    {
+        extractor = cv::AKAZE::create();
+    }
+    else if (descriptorType.compare("SIFT") == 0)
+    {
+        extractor = cv::xfeatures2d::SIFT::create();
     }
 
     // perform feature description
     double t = (double)cv::getTickCount();
     extractor->compute(img, keypoints, descriptors);
     t = ((double)cv::getTickCount() - t) / cv::getTickFrequency();
-    cout << descriptorType << " descriptor extraction in " << 1000 * t / 1.0 << " ms" << endl;
+    // cout << descriptorType << " descriptor extraction in " << 1000 * t / 1.0 << " ms" << endl;
 }
 
 // Detect keypoints in image using the traditional Shi-Thomasi detector
@@ -107,6 +134,7 @@ void detKeypointsHarris(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img, bool
 {
     int blockSize = 2;
     int apertureSize = 3;
+    int minResponse = 100;
     double k = 0.04;
 
     // Apply corner detection
@@ -116,20 +144,35 @@ void detKeypointsHarris(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img, bool
     cv::cornerHarris(img, dst, blockSize, apertureSize, k, cv::BORDER_DEFAULT);
     cv::normalize(dst, dst_norm, 0, 255, cv::NORM_MINMAX, CV_32FC1, cv::Mat());
 
-    // NonMaxSuppression
-    int minResponse = 100;
-    int regionSize = 9;
-    int regionCenter = (regionSize - 1)/2;
-    for( int row = regionCenter; row < dst_norm.rows - regionCenter ; row++ )
+    for( int row = 0; row < dst_norm.rows; row++ )
     {
-        for( int col = regionCenter; col < dst_norm.cols - regionCenter; col++ )
+        for( int col = 0; col < dst_norm.cols; col++ )
         {
-            if( (int) dst_norm.at<float>(row,col) > minResponse )
+            float response = dst_norm.at<float>(row,col);
+            if( (int) response > minResponse )
             {
-                cv::Mat localRegion = dst_norm.colRange(col - regionCenter, col + regionCenter + 1).rowRange(row-regionCenter, row+regionCenter+1);
-                cv::Point maxLoc;
-                cv::minMaxLoc(localRegion, NULL, NULL, NULL, &maxLoc);
-                keypoints.emplace_back(col + maxLoc.x - regionCenter, row + maxLoc.y - regionCenter, regionSize, 0, dst_norm.at<float>(row + maxLoc.y - regionCenter ,col + maxLoc.x - regionCenter));
+                cv::KeyPoint newkp;
+                newkp.pt = cv::Point2f(col, row);
+                newkp.size = apertureSize * 2;
+                newkp.response = response;
+            
+                // NonMaxSuppression
+                bool overlap = false;
+                for(auto& kp : keypoints)
+                {
+                    if(cv::KeyPoint::overlap(newkp, kp) > 0.0)
+                    {
+                        overlap = true;
+                        if(newkp.response > kp.response)
+                        {
+                            newkp = kp;
+                            break;
+                        }
+                        
+                    }
+                }
+                if(!overlap)
+                    keypoints.push_back(newkp);
             }
         }
     }
@@ -139,8 +182,8 @@ void detKeypointsHarris(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img, bool
     // visualize results
     if (bVis)
     {
-        // cv::Mat dst_norm_scaled;
-        // cv::convertScaleAbs( dst_norm, dst_norm_scaled );
+        cv::Mat dst_norm_scaled;
+        cv::convertScaleAbs( dst_norm, dst_norm_scaled );
         cv::Mat visImage = img.clone();
         cv::drawKeypoints(img, keypoints, visImage, cv::Scalar::all(-1), cv::DrawMatchesFlags::DRAW_RICH_KEYPOINTS);
         string windowName = "Harris Corner Detector Results";
